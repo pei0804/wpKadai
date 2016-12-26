@@ -1,0 +1,39 @@
+{% extends 'admin.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'include/flashMessage.twig' %}
+        <h1 class="page-header">{{ title }}</h1>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h2 class="panel-title">作成者：{{ report.users().getResults().us_name|e }}</h2>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                    <tr>
+                        <th class="success" style="width: 10%;">作業日</th>
+                        <td>{{ report.rp_date }}</td>
+                    <tr>
+                    <tr>
+                        <th class="success">作成時刻</th>
+                        <td>{{ report.rp_time_from|date("H:i") }} 〜 {{ report.rp_time_to|date("H:i") }}</td>
+                    <tr>
+                    <tr>
+                        <th class="success">作業種類</th>
+                        <td>{{ report.reportcates().getResults().rc_name  }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-body">
+                {{ report.rp_content|nl2br }}
+            </div>
+            <div class="panel-footer text-left">作成日： {{ report.rp_created_at }}</div>
+        </div>
+
+        <form action="{{ siteUrl('report') }}/{{ report.id }}" method="post">
+            <input type="hidden" name="_METHOD" value="DELETE"/>
+            <input type="hidden" value="{{ report.id }}" name="id">
+            <input type="submit" class="btn btn-danger btn-block" value="このレポートを削除する" />
+        </form>
+    </div>
+{% endblock %}

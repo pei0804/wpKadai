@@ -1,0 +1,13 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="{{siteUrl('report')}}" class="navbar-brand">WP32 評価課題</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="{{siteUrl('report/create')}}"><span class="glyphicon glyphicon-pencil"></span>新規作成</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{siteUrl('/logout')}}"><span class="glyphicon glyphicon-user"></span>({{ user.name }})ログアウト</a></li>
+        </ul>
+    </div>
+</nav>

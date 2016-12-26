@@ -1,0 +1,144 @@
+{% extends 'admin.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% include 'include/flashMessage.twig' %}
+        <h1 class="page-header">{{ title }}</h1>
+        <form role="form" method="post" action="{{ siteUrl('report') }}">
+            <input type="hidden" value="{{ user.id }}" name="user_id">
+
+            <div class="form-group">
+                <label class="control-label" for="name">作業日</label>
+                <p class="help-block" style="color: red;"> {{ flash.errors.rp_time_to|first }}</p>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <select name="rp_date_year" id="rp_date_year" class="form-control">
+                            {% set inputYear = flash.input.rp_date_year|default("now"|date("Y")) %}
+                            {% for year in "now"|date("Y").."now"|date("Y")+10 %}
+                                {% if year == inputYear %}
+                                    <option value="{{ "%04d"|format(year) }}" selected>{{ year }}</option>
+                                {% else %}
+                                    <option value="{{ "%04d"|format(year) }}">{{ year }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_date_year" style="padding: 10px">年</label>
+                    </div>
+
+                    <div class="form-group">
+                        <select name="rp_date_month" id="rpdate_month" class="form-control">
+                            {% set inputMonth = flash.input.rp_date_month|default("now"|date("m")) %}
+                            {% for month in 1..12 %}
+                                {% if month == inputMonth %}
+                                    <option value="{{ "%02d"|format(month) }}" selected>{{ month }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(month) }}">{{ month }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_date_month" style="padding: 10px">月</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="rp_date_day" id="rp_date_day" class="form-control">
+                            {% set inputDay = flash.input.rp_date_day|default("now"|date("d")) %}
+                            {% for day in 1..31 %}
+                                {% if day == inputDay %}
+                                    <option value="{{ "%02d"|format(day) }}" selected>{{ day }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(day) }}">{{ day }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_date_day" style="padding: 10px">日</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label" for="name">作業時間</label>
+                <p class="help-block"
+                   style="color: red;">{{ flash.errors.rp_time_from|first|default('') }}{{ flash.errors.rp_time_to|first|default('') }}</p>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <select name="rp_time_from_hour" id="rp_time_from_month" class="form-control">
+                            {% set inputHour = flash.input.rp_time_from_hour|default('9999') %}
+                            <option value="9999">----</option>
+                            {% for hour in 0..24 %}
+                                {% if hour == inputHour %}
+                                    <option value="{{ "%02d"|format(hour) }}" selected>{{ "%02d"|format(hour) }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(hour) }}">{{ "%02d"|format(hour) }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_time_from_hour" style="padding: 5px">：</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="rp_time_from_min" id="rp_time_from_min" class="form-control">
+                            {% set inputMin = flash.input.rp_time_from_min|default('9999') %}
+                            <option value="9999">----</option>
+                            {% for min in 0..59 %}
+                                {% if min == inputMin %}
+                                    <option value="{{ "%02d"|format(min) }}" selected>{{ "%02d"|format(min) }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(min) }}">{{ "%02d"|format(min) }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_time_from_min" style="padding: 5px">〜</label>
+                    </div>
+
+                    <div class="form-group">
+                        <select name="rp_time_to_hour" id="rp_time_to_hour" class="form-control">
+                            {% set inputHour = flash.input.rp_time_to_hour|default("now"|date("H")) %}
+                            {% for hour in 0..24 %}
+                                {% if hour == inputHour %}
+                                    <option value="{{ "%02d"|format(hour) }}" selected>{{ "%02d"|format(hour) }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(hour) }}">{{ "%02d"|format(hour) }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select><label for="rp_time_to_hour" style="padding: 5px">：</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="rp_time_to_min" id="rp_time_to_min" class="form-control">
+                            {% set inputMin = flash.input.rp_time_to_min|default("now"|date("i")) %}
+                            {% for min in 0..59 %}
+                                {% if min == inputMin %}
+                                    <option value="{{ "%02d"|format(min) }}" selected>{{ "%02d"|format(min) }}</option>
+                                {% else %}
+                                    <option value="{{ "%02d"|format(min) }}">{{ "%02d"|format(min) }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="name">作業種類</label>
+                <p class="help-block" style="color: red;">{{ flash.errors.reportcate_id|first }}</p>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <select name="reportcate_id" id="reportcate_id" class="form-control">
+                            <option value="">----</option>
+                            {% set selectReportcates = flash.input.reportcate_id|default('') %}
+                            {% for reportcate in reportcates %}
+                                {% if reportcate.id == selectReportcates %}
+                                    <option value="{{ reportcate.id }}" selected>{{ reportcate.rc_name }}</option>
+                                {% else %}
+                                    <option value="{{ reportcate.id }}">{{ reportcate.rc_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="rp_content">作業内容</label>
+                <p class="help-block" style="color: red;">{{ flash.errors.rp_content|first }}</p>
+            <textarea rows="5" name="rp_content" id="rp_content" class="form-control"
+                      placeholder="（例）がんばった">{{ flash.input.rp_content }}</textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="送信します">
+        </form>
+    </div>
+
+{% endblock %}
