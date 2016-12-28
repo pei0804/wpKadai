@@ -1,5 +1,8 @@
 # Howto
 
+You can use the method of the package you are using. I will introduce some examples of use
+Please refer to composer.json for version
+
 ## RoutingPattern
 - [English](https://laravel.com/docs/4.2/routing)
 - [japanese](https://readouble.com/laravel/4.2/ja/quick.html)
@@ -102,6 +105,28 @@ App::render('report/show.twig', $this->data);
 
 ```php
 $findReports = $Reports->newQuery()->orderBy('created_at', 'desc');
+```
+
+#### Transaction
+
+```php
+$db = \DB::getConnection();
+try {
+    $db->beginTransaction();
+    $hoge->save()
+    $hoge2->save()
+    $hoge3->save()
+    $db->commit();
+} catch (\Exception $e) {
+    $db->rollBack();
+}
+```
+
+#### lastInsertId
+
+```php
+$Recipe->save();
+$recipeId = $Recipe->getConnection()->getPdo()->lastInsertId();
 ```
 
 ### Validation
