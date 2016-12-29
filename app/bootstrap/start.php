@@ -8,6 +8,7 @@ define('VENDOR_PATH', __DIR__.'/../../vendor/');
 define('APP_PATH'   , __DIR__.'/../../app/');
 define('MODULE_PATH', __DIR__.'/../../app/modules/');
 define('PUBLIC_PATH', __DIR__.'/../../public/');
+define('PAGING_THEMES_PATH', ROOT_PATH.'src/Slimvc/themes/default');
 
 require VENDOR_PATH.'autoload.php';
 

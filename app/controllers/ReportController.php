@@ -23,7 +23,7 @@ Class ReportController extends Controller
             $findReports = $Reports->newQuery()->orderBy('rp_date', 'desc');
             $this->data['reports'] = $Reports->findByQueryPerPage($findReports, $page);
             $this->data['pager'] = $Reports->paginationNav((int)$page, $this->siteUrl('report'))
-                ->numbers('<li><a href="{url}{nr}">{nr}</a>', '<li class="active"><span>{nr}</span></li>');
+                ->get_html(PAGING_THEMES_PATH);
             App::render('report/index.twig', $this->data);
         } catch (\SQLiteException $e) {
             App::flash('messageError', "データベースエラーが発生しました。管理者にお問い合わせください。");
