@@ -1,6 +1,7 @@
 # Howto
 
-You can use the method of the package you are using. I will introduce some examples of use
+You can use the method of the package you are using
+I will introduce some examples of use
 Please refer to composer.json for version
 
 ## RoutingPattern
@@ -173,13 +174,28 @@ protected static function messages()
 $findReports = $Reports->newQuery()->orderBy('rp_date', 'desc');
 $this->data['reports'] = $Reports->findByQueryPerPage($findReports, $page);
 $this->data['pager'] = $Reports->paginationNav((int)$page, $this->siteUrl('report'))
-    ->numbers('<li><a href="{url}{nr}">{nr}</a>', '<li class="active"><span>{nr}</span></li>');
+    ->get_html(PAGING_THEMES_PATH);
 ```
 
 ```php
 $this->data['reports'] = $Reports->findAllPerPage($page);
 $this->data['pager'] = $Reports->paginationNav((int)$page, $this->siteUrl('report'))
-    ->numbers('<li><a href="{url}{nr}">{nr}</a>', '<li class="active"><span>{nr}</span></li>');
+    ->get_html(PAGING_THEMES_PATH);
+```
+
+themes file
+/src/Slimvc/themes/default.php
+```php
+<?php
+$theme['pre']      = '<nav><ul class="pagination">';
+$theme['first']    = array('<li><a href="{url}{nr}">First</a></li> ', '<li class="disabled"><a>First</a></li>');
+$theme['previous'] = array('<li><a href="{url}{nr}">&laquo;</a></li> ', '<li class="disabled"><a>&laquo;</a></li>');
+$theme['numbers']  = array('<li><a href="{url}{nr}">{nr}</a></li> ', '<li class="active"><a href="#">{nr} <span class="sr-only">(current)</span></a></li>');
+$theme['next']     = array('<li><a href="{url}{nr}">&raquo;</a></li>', '<li class="disabled"><a>&raquo;</a></li>');
+$theme['last']     = array('<li><a href="{url}{nr}">Last</a></li>', '<li class="disabled"><a>Last</a></li>');
+$theme['post']     = '</ul></nav>';
+
+return $theme;
 ```
 
 ## Migration
