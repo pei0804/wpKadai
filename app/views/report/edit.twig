@@ -3,6 +3,11 @@
 {% block body %}
     <div class="container">
         {% include 'include/flashMessage.twig' %}
+        <ol class="breadcrumb">
+            <li>
+                <a href="{{siteUrl('report')}}">レポート一覧</a>
+            <li class="active">編集</li>
+        </ol>
         <h1 class="page-header">{{ title }}</h1>
         <form role="form" method="post" action="{{ siteUrl('report') }}/{{ report.id }}">
 
