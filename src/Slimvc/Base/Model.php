@@ -21,12 +21,13 @@ class Model extends \Illuminate\Database\Eloquent\Model
     protected static function messages()
     {
         return [
-            'required' => '必須入力項目です',
-            'integer' => '数値のみで入力してください',
-            'email' => '入力されたメールアドレスの形式に間違いがあります',
-            'mimes' => '動画はMP4形式でアップロードしてください',
-            'string' => '不正な文字が入力されています',
-            'date_format' => '全て選択してください',
+            'required' => '必須入力項目です。',
+            'integer' => '数値のみで入力してください。',
+            'email' => '入力されたメールアドレスの形式に間違いがあります。',
+            'mimes' => '動画はMP4形式でアップロードしてください。',
+            'string' => '不正な文字が入力されています。',
+            'date_format' => '全て選択してください。',
+            'after' => '開始時間が終了時間を越しています。',
         ];
     }
 

@@ -21,7 +21,7 @@ class Reports extends Model
         return [
             'rp_date'     => ['required', 'date_format:Y-m-d'],
             'rp_time_from'     => ['required', 'date_format:H:i:s'],
-            'rp_time_to' => ['required', 'date_format:H:i:s'],
+            'rp_time_to' => ['required', 'date_format:H:i:s', 'after:rp_time_from'],
             'rp_content' => ['required', 'string'],
             'reportcate_id' => ['required', 'integer'],
         ];
