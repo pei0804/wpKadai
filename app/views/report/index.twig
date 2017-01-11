@@ -35,8 +35,10 @@
                 </tr>
             {% endfor %}
             </tbody>
-
         </table>
+        <ul class="pagination">
+            {{ pager|raw }}
+        </ul>
     </div>
 
 {% endblock %}
